@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <!-- Force mobile browsers to render in PC width for full table visibility, allowing smooth zooming -->
+  <meta name="viewport" content="width=1280">
+  <title>엔지니어를 위한 바이브코딩 강의안 모음 (최낙초, 이희근)</title>
+  
+  <!-- Toss's preferred modern Korean font: Pretendard -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+  
+  <style>
+    :root {
+      /* Toss Design System Color Tokens */
+      --toss-blue: #3182f6;
+      --toss-blue-light: #e8f3ff;
+      --toss-blue-hover: #1b64da;
+      --toss-blue-dimmed: rgba(49, 130, 246, 0.1);
+      
+      --toss-gray-50: #f9fafb;
+      --toss-gray-100: #f2f4f6;
+      --toss-gray-200: #e5e8eb;
+      --toss-gray-300: #d1d6db;
+      --toss-gray-400: #b0b8c1;
+      --toss-gray-500: #8b95a1;
+      --toss-gray-600: #6b7684;
+      --toss-gray-700: #4e5968;
+      --toss-gray-800: #333d4b;
+      --toss-gray-900: #191f28;
+
+      --accent-green: #22c55e;
+      --accent-green-light: #e8fbf0;
+      --accent-purple: #8b5cf6;
+      --accent-purple-light: #f3e8ff;
+      --accent-orange: #f97316;
+      --accent-orange-light: #fff7ed;
+
+      --bg-page: #f2f4f6;
+      --bg-card: #ffffff;
+      
+      --border-radius-sm: 8px;
+      --border-radius-md: 14px;
+      --border-radius-lg: 20px;
+      --border-radius-pill: 999px;
+
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.08);
+
+      --font-main: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-page);
+      color: var(--toss-gray-900);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      /* Guarantee the PC width on mobile viewports */
+      min-width: 1280px;
+      padding-bottom: 120px; /* Space for the floating editor bar */
+    }
+
+    /* Toss style Navigation Bar */
+    .nav-bar {
+      height: 60px;
+      background-color: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--toss-gray-200);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .nav-container {
+      width: 1200px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--toss-blue);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-logo svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .nav-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background-color: var(--toss-gray-100);
+      color: var(--toss-gray-700);
+      padding: 8px 14px;
+      border-radius: var(--border-radius-pill);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .nav-link-btn:hover {
+      background-color: var(--toss-gray-200);
+      color: var(--toss-gray-900);
+    }
+
+    .nav-link-btn.primary {
+      background-color: var(--toss-blue-light);
+      color: var(--toss-blue);
+    }
+
+    .nav-link-btn.primary:hover {
+      background-color: #dbeafe;
+    }
+
+    /* Main Container */
+    .app-container {
+      width: 1200px;
+      margin: 40px auto 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background-color: var(--toss-blue-light);
+      color: var(--toss-blue);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: var(--border-radius-pill);
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(49, 130, 246, 0.08);
+    }
+
+    .hero-title {
+      font-size: 38px;
+      font-weight: 850;
+      color: var(--toss-gray-900);
+      letter-spacing: -0.04em;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      word-break: keep-all;
+    }
+
+    .hero-subtitle {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--toss-gray-600);
+      letter-spacing: -0.02em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .instructor-badge {
+      background-color: var(--toss-gray-800);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 6px;
+      margin-left: 6px;
+    }
+
+    /* Dashboard Stats Card */
+    .stats-dashboard {
+      background: var(--bg-card);
+      border-radius: var(--border-radius-lg);
+      padding: 24px 32px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      margin-bottom: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stats-dashboard::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--toss-blue);
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--toss-gray-500);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stat-label svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    .stat-value {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--toss-gray-900);
+      letter-spacing: -0.02em;
+    }
+
+    .stat-value span {
+      font-size: 14px;
+      color: var(--toss-gray-500);
+      font-weight: 500;
+      margin-left: 2px;
+    }
+
+    .stat-progress-bar {
+      height: 6px;
+      background-color: var(--toss-gray-100);
+      border-radius: var(--border-radius-pill);
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .stat-progress-fill {
+      height: 100%;
+      background-color: var(--toss-blue);
+      border-radius: var(--border-radius-pill);
+      transition: width 0.6s ease;
+    }
+
+    .stat-progress-fill.green {
+      background-color: var(--accent-green);
+    }
+    
+    .stat-progress-fill.purple {
+      background-color: var(--accent-purple);
+    }
+
+    /* Content Area with Table */
+    .content-card {
+      background-color: var(--bg-card);
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--shadow-md);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      padding: 32px;
+      overflow: hidden;
+    }
+
+    /* Table Toolbar */
+    .table-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      gap: 20px;
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      max-width: 400px;
+    }
+
+    .search-input {
+      width: 100%;
+      height: 44px;
+      padding: 12px 16px 12px 42px;
+      border: 1px solid var(--toss-gray-300);
+      border-radius: var(--border-radius-md);
+      font-size: 14px;
+      font-weight: 500;
+      outline: none;
+      transition: all 0.2s ease;
+      color: var(--toss-gray-900);
+    }
+
+    .search-input:focus {
+      border-color: var(--toss-blue);
+      box-shadow: 0 0 0 3px rgba(49, 130, 246, 0.15);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      fill: var(--toss-gray-400);
+      pointer-events: none;
+    }
+
+    .filter-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .filter-btn {
+      background: var(--toss-gray-100);
+      border: none;
+      color: var(--toss-gray-600);
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: var(--border-radius-pill);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover {
+      background-color: var(--toss-gray-200);
+    }
+
+    .filter-btn.active {
+      background-color: var(--toss-blue-light);
+      color: var(--toss-blue);
+    }
+
+    .actions-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 44px;
+      padding: 0 20px;
+      border-radius: var(--border-radius-md);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .action-btn.edit-toggle {
+      background-color: var(--toss-gray-900);
+      color: #fff;
+    }
+
+    .action-btn.edit-toggle:hover {
+      background-color: var(--toss-gray-800);
+    }
+
+    .action-btn.edit-toggle.active {
+      background-color: var(--accent-orange);
+      color: #fff;
+    }
+
+    .action-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    /* Toss Table Design */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: var(--border-radius-md);
+      border: 1px solid var(--toss-gray-200);
+    }
+
+    .vibe-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    .vibe-table th {
+      background-color: var(--toss-gray-50);
+      color: var(--toss-gray-700);
+      font-weight: 700;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--toss-gray-200);
+      font-size: 13px;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
+    .vibe-table td {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--toss-gray-200);
+      color: var(--toss-gray-800);
+      vertical-align: middle;
+    }
+
+    .vibe-table tbody tr {
+      transition: background-color 0.15s ease;
+    }
+
+    .vibe-table tbody tr:hover {
+      background-color: #f9fafb;
+    }
+
+    .vibe-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Badges & Pills */
+    .order-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: var(--border-radius-pill);
+      white-space: nowrap;
+    }
+
+    .order-badge.curriculum {
+      background-color: var(--accent-orange-light);
+      color: var(--accent-orange);
+    }
+
+    .order-badge.lecture {
+      background-color: var(--toss-blue-light);
+      color: var(--toss-blue);
+    }
+
+    .order-badge.project {
+      background-color: var(--accent-purple-light);
+      color: var(--accent-purple);
+    }
+
+    .lecture-title-text {
+      font-weight: 750;
+      color: var(--toss-gray-900);
+      font-size: 15px;
+      letter-spacing: -0.02em;
+    }
+
+    /* Links Buttons Styles */
+    .link-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      border: 1px solid transparent;
+    }
+
+    /* Slide link - Toss blue */
+    .link-pill.slide {
+      background-color: var(--toss-blue-light);
+      color: var(--toss-blue);
+    }
+    .link-pill.slide:hover {
+      background-color: #d6eaff;
+      transform: translateY(-1px);
+    }
+
+    /* Script link - Teal/Green */
+    .link-pill.script {
+      background-color: var(--accent-green-light);
+      color: var(--accent-green);
+    }
+    .link-pill.script:hover {
+      background-color: #d1fae5;
+      transform: translateY(-1px);
+    }
+
+    /* Video links - Light Violet/Blue */
+    .link-pill.video {
+      background-color: #f3f4f6;
+      color: var(--toss-gray-700);
+      border: 1px solid var(--toss-gray-200);
+    }
+    .link-pill.video.has-link {
+      background-color: var(--accent-purple-light);
+      color: var(--accent-purple);
+      border: 1px solid transparent;
+    }
+    .link-pill.video.has-link:hover {
+      background-color: #e9d5ff;
+      transform: translateY(-1px);
+    }
+
+    /* Disabled/Empty links - Light gray */
+    .link-pill.empty {
+      background-color: var(--toss-gray-100);
+      color: var(--toss-gray-400);
+      cursor: not-allowed;
+      pointer-events: none;
+      font-weight: 500;
+    }
+
+    .link-pill svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+
+    .remarks-cell {
+      color: var(--toss-gray-600);
+      font-size: 13px;
+      line-height: 1.4;
+      max-width: 150px;
+      word-break: keep-all;
+    }
+
+    /* Form Fields for Edit Mode */
+    .edit-input {
+      width: 100%;
+      height: 36px;
+      padding: 6px 10px;
+      border: 1px solid var(--toss-gray-300);
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      outline: none;
+      transition: border-color 0.15s ease;
+      font-family: var(--font-main);
+    }
+
+    .edit-input:focus {
+      border-color: var(--toss-blue);
+      background-color: #fff;
+    }
+
+    .edit-input.title-input {
+      font-weight: 700;
+    }
+
+    .edit-input.url-input {
+      font-family: monospace;
+      font-size: 11px;
+      color: var(--toss-blue);
+      background-color: #f9fafb;
+    }
+
+    /* Floating Admin Control Bar */
+    .admin-floating-bar {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      width: 900px;
+      background-color: var(--toss-gray-900);
+      color: #fff;
+      border-radius: var(--border-radius-lg);
+      padding: 16px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.25);
+      z-index: 999;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .admin-floating-bar.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .admin-bar-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .admin-bar-badge {
+      background-color: var(--accent-orange);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: var(--border-radius-pill);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    .admin-bar-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--toss-gray-300);
+    }
+
+    .admin-bar-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .admin-btn {
+      height: 40px;
+      padding: 0 18px;
+      border-radius: var(--border-radius-md);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .admin-btn.save {
+      background-color: var(--toss-blue);
+      color: #fff;
+    }
+
+    .admin-btn.save:hover {
+      background-color: var(--toss-blue-hover);
+    }
+
+    .admin-btn.copy {
+      background-color: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .admin-btn.copy:hover {
+      background-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .admin-btn.cancel {
+      background-color: transparent;
+      color: var(--toss-gray-400);
+    }
+
+    .admin-btn.cancel:hover {
+      color: #fff;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100px);
+      background-color: rgba(25, 31, 40, 0.95);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: var(--border-radius-pill);
+      font-size: 14px;
+      font-weight: 600;
+      z-index: 10000;
+      box-shadow: var(--shadow-lg);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
+      opacity: 0;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .toast svg {
+      width: 16px;
+      height: 16px;
+      fill: var(--accent-green);
+    }
+
+    /* Modal dialog for fallback copying */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-box {
+      width: 650px;
+      background-color: var(--bg-card);
+      border-radius: var(--border-radius-lg);
+      padding: 32px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--toss-gray-200);
+      transform: scale(0.95);
+      transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .modal-overlay.show .modal-box {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--toss-gray-900);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--toss-gray-400);
+      font-size: 24px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .modal-close:hover {
+      color: var(--toss-gray-700);
+    }
+
+    .modal-body p {
+      font-size: 14px;
+      color: var(--toss-gray-600);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .modal-textarea {
+      width: 100%;
+      height: 250px;
+      border: 1px solid var(--toss-gray-300);
+      border-radius: var(--border-radius-md);
+      padding: 12px;
+      font-family: monospace;
+      font-size: 11px;
+      resize: none;
+      outline: none;
+      background-color: var(--toss-gray-50);
+      color: var(--toss-gray-800);
+      margin-bottom: 20px;
+    }
+
+    .modal-textarea:focus {
+      border-color: var(--toss-blue);
+      background-color: #fff;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    /* Footer */
+    .app-footer {
+      width: 1200px;
+      margin: 48px auto 0 auto;
+      padding: 24px 20px;
+      text-align: center;
+      border-top: 1px solid var(--toss-gray-200);
+      color: var(--toss-gray-500);
+      font-size: 13px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <a href="#" class="nav-logo">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+        </svg>
+        VIBE CODING
+      </a>
+      <div class="nav-links">
+        <a href="https://github.com/heekeunlee/lecture_output" target="_blank" class="nav-link-btn">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" style="display: inline-block; vertical-align: text-bottom;">
+            <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.35 3.12.88.01.47.01.9.01 1.07 0 .21-.15.46-.55.38A8.013 8.013 0 0 1 0 8c0-4.42 3.58-8 8-8z"/>
+          </svg>
+          저장소 바로가기
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="app-container">
+
+    <!-- Hero Section -->
+    <header class="hero-section">
+      <div class="hero-badge">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+          <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm8.32 8.74L12 16.26l-8.32-4.52-1.36.74L12 18l9.68-5.27-1.36-.74z"/>
+        </svg>
+        공식 강의 아카이브
+      </div>
+      <h1 class="hero-title">엔지니어를 위한 바이브코딩 강의안 모음</h1>
+      <div class="hero-subtitle">
+        최낙초, 이희근 저자 직강
+        <span class="instructor-badge">저자 직강</span>
+      </div>
+    </header>
+
+    <!-- Dashboard Statistics Bar -->
+    <div class="stats-dashboard">
+      <div class="stat-item">
+        <div class="stat-label">
+          <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0-2-.9-2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+          전체 교육 차시
+        </div>
+        <div class="stat-value" id="stats-total">21<span>개</span></div>
+        <div class="stat-progress-bar">
+          <div class="stat-progress-fill" style="width: 100%"></div>
+        </div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">
+          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v-2H7v-2h7V9H7V7h7V5h5v12h-5z"/></svg>
+          강의교안 등록률
+        </div>
+        <div class="stat-value" id="stats-slides">0%</div>
+        <div class="stat-progress-bar">
+          <div class="stat-progress-fill green" id="stats-slides-progress" style="width: 0%"></div>
+        </div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v-2H8v-2h8V9H8V7h8v11z"/></svg>
+          대본(스크립트) 등록률
+        </div>
+        <div class="stat-value" id="stats-scripts">0%</div>
+        <div class="stat-progress-bar">
+          <div class="stat-progress-fill purple" id="stats-scripts-progress" style="width: 0%"></div>
+        </div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">
+          <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4zM14 13h-3v3H9v-3H6v-2h3V8h2v3h3v2z"/></svg>
+          동영상 강의 연결 수
+        </div>
+        <div class="stat-value" id="stats-videos">0<span>개</span></div>
+        <div class="stat-progress-bar">
+          <div class="stat-progress-fill" id="stats-videos-progress" style="width: 0%; background-color: var(--accent-purple);"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Card -->
+    <div class="content-card">
+      
+      <!-- Toolbar Controls -->
+      <div class="table-toolbar">
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24">
+            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+          </svg>
+          <input type="text" id="search-input" class="search-input" placeholder="강의명 또는 단어로 검색해 보세요">
+        </div>
+
+        <div class="filter-group">
+          <button class="filter-btn active" onclick="filterCategory('all', this)">전체</button>
+          <button class="filter-btn" onclick="filterCategory('curriculum', this)">커리큘럼</button>
+          <button class="filter-btn" onclick="filterCategory('lecture', this)">일반 강의</button>
+          <button class="filter-btn" onclick="filterCategory('project', this)">실습 프로젝트</button>
+        </div>
+
+        <div class="actions-group">
+          <button class="action-btn edit-toggle" id="edit-mode-btn" onclick="toggleEditMode()">
+            <svg viewBox="0 0 24 24" id="edit-btn-icon">
+              <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+            </svg>
+            <span id="edit-btn-text">링크 편집 모드</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Table -->
+      <div class="table-container">
+        <table class="vibe-table">
+          <thead>
+            <tr>
+              <th style="width: 8%;">강의순서</th>
+              <th style="width: 32%;">제목</th>
+              <th style="width: 11%; text-align: center;">강의교안</th>
+              <th style="width: 11%; text-align: center;">스크립트(대본)</th>
+              <th style="width: 10%; text-align: center;">동영상1</th>
+              <th style="width: 10%; text-align: center;">동영상2</th>
+              <th style="width: 10%; text-align: center;">동영상3</th>
+              <th style="width: 8%;">비고</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <!-- Dynamically rendered rows go here -->
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>© 2026 엔지니어를 위한 바이브코딩 (최낙초, 이희근). All rights reserved.</p>
+    </footer>
+  </div>
+
+  <!-- Floating Editor Action Bar -->
+  <div class="admin-floating-bar" id="admin-floating-bar">
+    <div class="admin-bar-info">
+      <span class="admin-bar-badge">Live Edit</span>
+      <span class="admin-bar-text">실시간 테이블 편집 모드 진행 중입니다. 변경 내용을 저장해 주세요.</span>
+    </div>
+    <div class="admin-bar-buttons">
+      <button class="admin-btn copy" onclick="copyUpdatedJSON()">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+        </svg>
+        JSON 데이터 복사
+      </button>
+      <button class="admin-btn save" onclick="saveData()">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/>
+        </svg>
+        HTML로 저장 & 다운로드
+      </button>
+      <button class="admin-btn cancel" onclick="cancelEditMode()">취소</button>
+    </div>
+  </div>
+
+  <!-- Success Toast -->
+  <div class="toast" id="toast-notification">
+    <svg viewBox="0 0 24 24">
+      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+    </svg>
+    <span id="toast-message">작업이 정상적으로 완료되었습니다!</span>
+  </div>
+
+  <!-- Modal for CORS download failure fallback -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">HTML 저장 알림</h3>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p id="modal-desc">
+          브라우저의 보안 정책(로컬 파일 바로 열기 등)으로 인해 현재 HTML 소스 코드를 동적으로 수정하여 다운로드할 수 없습니다.<br>
+          아래의 <strong>최신 JSON 데이터</strong>를 복사한 후, <code>index.html</code> 파일 내부 하단에 있는 <code>LECTURE_DATA</code> 부분을 통째로 덮어쓰기 해 주시면 파일 저장이 완료됩니다!
+        </p>
+        <textarea class="modal-textarea" id="modal-json-text" readonly onclick="this.select()"></textarea>
+        <div class="modal-actions">
+          <button class="admin-btn save" onclick="copyModalJSON()">텍스트 복사하기</button>
+          <button class="admin-btn copy" onclick="closeModal()">닫기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dynamic Logic & Data Script -->
+  <script>
+    // Editable data structures
+    /*DATA_START*/
+    let LECTURE_DATA = [
+      {
+        "id": "curriculum",
+        "type": "curriculum",
+        "order": "커리큘럼",
+        "title": "엔지니어를 위한 바이브코딩 전체 로드맵 및 학습 방법론",
+        "slideUrl": "",
+        "scriptUrl": "",
+        "video1Url": "",
+        "video2Url": "",
+        "video3Url": "",
+        "remarks": "강의 전체 개요"
+      },
+      {
+        "id": "l-1",
+        "type": "lecture",
+        "order": "1강",
+        "title": "AI 시대의 엔지니어와 바이브코딩(Vibe Coding)의 도래",
+        "slideUrl": "",
+        "scriptUrl": "",
+        "video1Url": "",
+        "video2Url": "",
+        "video3Url": "",
+        "remarks": ""
+      },
+      {
+        "id": "l-2",
+        "type": "lecture",
+        "order": "2강",
+        "title": "바이브코딩 핵심 도구 구축 (Cursor, VS Code, 확장 모듈)",
+        "slideUrl": "",
+        "scriptUrl": "",
+        "video1Url": "",
+        "video2Url": "",
+        "video3Url": "",
+        "remarks": ""
+      },
+      {
+        "id": "l-3",
+        "type": "lecture",
+        "order": "3강",
+        "title": "효과적인 AI 프롬프팅 기법 및 엔지니어링 컨텍스트 주입법",
+        "slideUrl": "",
+        "scriptUrl": "",
+        "video1Url": "",
+        "video2Url": "",
+        "video3Url": "",
+        "remarks": ""
+      },
+      {
+        "id": "l-4",
+        "type": "lecture",
+        "order": "4강",
+        "title": "기존 레거시 코드 분석 및 AI 기반 리팩토링 자동화",
+        "slideUrl": "",
+        "scriptUrl": "",
+        "video1Url": "",
+        "video2Url": "",
+        "video3Url": "",
+        "remarks": ""
+      },
+      {
+        "id": "l-5",
+        "type": "lecture",
+        "order": "5강",
+        "title": "AI 협업을 통한 알고리즘 설계 및 최적의 구현법 탐색",
+        "slideUrl": "",
+        "scriptUrl": "",
+        "video1Url": "",
+        "video2Url": "",
+        "video3Url": "",
+        "remarks": ""
+      },
+      {
+        "id": "l-6",
+        "type": "lecture",
+        "order": "6강",
+        "title": "초고속 프론트엔드 프로토타이핑: HTML/CSS/JS 논스톱 개발",
+        "slideUrl": "",
+        "scriptUrl": "",
+        "video1Url": "",
+        "video2Url": "",
+        "video3Url": "",
+        "remarks": ""
+      },
+      {
+        "id": "l-7",
+        "type": "lecture",
+        "order": "7강",
+        "title": "데이터 분석 및 수집 파이프라인 자동화 (Python & Pandas)",
+        "slideUrl": "",
+        "scriptUrl": "",
+        "video1Url": "",
+        "video2Url": "",
+        "video3Url": "",
+        "remarks": ""
+      },
+      {
+        "id": "l-8",
+        "type": "lecture",
+        "order": "8강",
+        "title": "외부 API 연동 및 서버리스 백엔드 초신속 구축법",
+        "slideUrl": "",
+        "scriptUrl": "",
+        "video1Url": "",
+        "video2Url": "",
+        "video3Url": "",
+        "remarks": ""
+      },
+      {
+        "id": "l-9",
+        "type": "lecture",
+        "order": "9강",
+        "title": "데이터베이스 설계 및 AI 기반 SQL 쿼리 고도화/최적화",
+        "slideUrl": "",
+        "scriptUrl": "",
+        "video1Url": "",
+        "video2Url": "",
+        "video3Url": "",
+        "remarks": ""
+      },
+      {
+        "id": "l-10",
+        "type": "lecture",
+        "order": "10강",
+        "title": "AI 페어 프로그래머와 함께하는 효율적 디버깅 및 에러 해결",
+        "slideUrl": "",
+        "scriptUrl": "",
+        "video1Url": "",
+        "video2Url": "",
+        "video3Url": "",
+        "remarks": ""
+      },
+      {
+        "id": "l-11",
+        "type": "lecture",
+        "order": "11강",
+        "title": "단위 테스트(Unit Test) 및 통합 테스트 시나리오 자동 생성",
+        "slideUrl": "",
+        "scriptUrl": "",
+        "video1Url": "",
+        "video2Url": "",
+        "video3Url": "",
+        "remarks": ""
+      },
+      {
+        "id": "l-12",
+        "type": "lecture",
+        "order": "12강",
+        "title": "웹 데이터 크롤링 및 백그라운드 수집 자동화 스크립트",
+        "slideUrl": "",
+        "scriptUrl": "",
+        "video1Url": "",
+        "video2Url": "",
+        "video3Url": "",
+        "remarks": ""
+      },
+      {
+        "id": "l-13",
+        "type": "lecture",
+        "order": "13강",
+        "title": "엔지니어를 위한 업무 자동화 봇 및 스케줄러 시스템 빌드",
+        "slideUrl": "",
+        "scriptUrl": "",
+        "video1Url": "",
+        "video2Url": "",
+        "video3Url": "",
+        "remarks": ""
+      },
+      {
+        "id": "l-14",
+        "type": "lecture",
+        "order": "14강",
+        "title": "Git & GitHub 업무 효율 극대화 (PR, 커밋 생성 자동화)",
+        "slideUrl": "",
+        "scriptUrl": "",
+        "video1Url": "",
+        "video2Url": "",
+        "video3Url": "",
+        "remarks": ""
+      },
+      {
+        "id": "l-15",
+        "type": "lecture",
+        "order": "15강",
+        "title": "AI API (Gemini, OpenAI) 직접 연동하여 나만의 AI 앱 구현",
+        "slideUrl": "",
+        "scriptUrl": "",
+        "video1Url": "",
+        "video2Url": "",
+        "video3Url": "",
+        "remarks": ""
+      },
+      {
+        "id": "l-16",
+        "type": "lecture",
+        "order": "16강",
+        "title": "GitHub Pages 및 Cloud 호스팅을 통한 실시간 배포 자동화",
+        "slideUrl": "",
+        "scriptUrl": "",
+        "video1Url": "",
+        "video2Url": "",
+        "video3Url": "",
+        "remarks": ""
+      },
+      {
+        "id": "l-17",
+        "type": "lecture",
+        "order": "17강",
+        "title": "실무 바이브코딩 생산성 가이드라인 및 앞으로의 미래 방향",
+        "slideUrl": "",
+        "scriptUrl": "",
+        "video1Url": "",
+        "video2Url": "",
+        "video3Url": "",
+        "remarks": ""
+      },
+      {
+        "id": "p-1",
+        "type": "project",
+        "order": "프로젝트1",
+        "title": "실시간 데이터 가시화 모니터링 시스템 구축 실습",
+        "slideUrl": "",
+        "scriptUrl": "",
+        "video1Url": "",
+        "video2Url": "",
+        "video3Url": "",
+        "remarks": "종합 프로젝트"
+      },
+      {
+        "id": "p-2",
+        "type": "project",
+        "order": "프로젝트2",
+        "title": "업무 비서용 LLM 기반 커스텀 챗봇 서비스 개발 실습",
+        "slideUrl": "",
+        "scriptUrl": "",
+        "video1Url": "",
+        "video2Url": "",
+        "video3Url": "",
+        "remarks": "종합 프로젝트"
+      },
+      {
+        "id": "p-3",
+        "type": "project",
+        "order": "프로젝트3",
+        "title": "머신러닝 모델 추론 자동화 & 대화형 UI 웹 서비스 배포",
+        "slideUrl": "",
+        "scriptUrl": "",
+        "video1Url": "",
+        "video2Url": "",
+        "video3Url": "",
+        "remarks": "종합 프로젝트"
+      }
+    ];
+    /*DATA_END*/
+
+    // App state variables
+    let currentCategory = 'all';
+    let searchQuery = '';
+    let isEditMode = false;
+
+    // SVG icons helpers
+    const SLIDE_ICON = `<svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v-2H7v-2h7V9H7V7h7V5h5v12h-5z"/></svg>`;
+    const SCRIPT_ICON = `<svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v-2H8v-2h8V9H8V7h8v11z"/></svg>`;
+    const VIDEO_ICON = `<svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>`;
+    const WAITING_ICON = `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg>`;
+
+    // Initial load
+    document.addEventListener('DOMContentLoaded', () => {
+      // Try to load saved data from localStorage first
+      const savedData = localStorage.getItem('vibe_coding_lectures');
+      if (savedData) {
+        try {
+          LECTURE_DATA = JSON.parse(savedData);
+        } catch (e) {
+          console.error("Local data parsing error, falling back to default.", e);
+        }
+      }
+      
+      initApp();
+
+      // Listen for search input changes
+      document.getElementById('search-input').addEventListener('input', (e) => {
+        searchQuery = e.target.value.toLowerCase().trim();
+        renderTable();
+      });
+    });
+
+    function initApp() {
+      renderStats();
+      renderTable();
+    }
+
+    // Render stats section
+    function renderStats() {
+      const total = LECTURE_DATA.length;
+      
+      let slideCount = 0;
+      let scriptCount = 0;
+      let videoCount = 0;
+
+      LECTURE_DATA.forEach(item => {
+        if (item.slideUrl && item.slideUrl !== '#') slideCount++;
+        if (item.scriptUrl && item.scriptUrl !== '#') scriptCount++;
+        if (item.video1Url && item.video1Url !== '#') videoCount++;
+        if (item.video2Url && item.video2Url !== '#') videoCount++;
+        if (item.video3Url && item.video3Url !== '#') videoCount++;
+      });
+
+      const slidePercent = Math.round((slideCount / total) * 100) || 0;
+      const scriptPercent = Math.round((scriptCount / total) * 100) || 0;
+
+      // Update values
+      document.getElementById('stats-total').innerHTML = `${total}<span>개</span>`;
+      
+      document.getElementById('stats-slides').innerText = `${slidePercent}%`;
+      document.getElementById('stats-slides-progress').style.width = `${slidePercent}%`;
+      
+      document.getElementById('stats-scripts').innerText = `${scriptPercent}%`;
+      document.getElementById('stats-scripts-progress').style.width = `${scriptPercent}%`;
+      
+      document.getElementById('stats-videos').innerHTML = `${videoCount}<span>개</span>`;
+      // We set arbitrary 100% video coverage threshold equal to having 1 video per lecture
+      const videoPercent = Math.min(Math.round((videoCount / total) * 100), 100) || 0;
+      document.getElementById('stats-videos-progress').style.width = `${videoPercent}%`;
+    }
+
+    // Filter by type categories
+    function filterCategory(category, element) {
+      currentCategory = category;
+      
+      // Update active styling
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      element.classList.add('active');
+      
+      renderTable();
+    }
+
+    // Render table rows
+    function renderTable() {
+      const tbody = document.getElementById('table-body');
+      tbody.innerHTML = '';
+
+      // Filter logic
+      const filteredData = LECTURE_DATA.filter(item => {
+        // Category check
+        const categoryMatch = (currentCategory === 'all') || (item.type === currentCategory);
+        
+        // Search query check
+        const searchQueryMatch = !searchQuery || 
+          item.title.toLowerCase().includes(searchQuery) ||
+          item.order.toLowerCase().includes(searchQuery) ||
+          item.remarks.toLowerCase().includes(searchQuery);
+
+        return categoryMatch && searchQueryMatch;
+      });
+
+      if (filteredData.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" style="text-align: center; padding: 48px; color: var(--toss-gray-500); font-weight: 500;">
+              검색 조건에 맞는 자료가 없습니다.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      filteredData.forEach(item => {
+        const row = document.createElement('tr');
+        
+        // Order badge class mapping
+        let orderBadgeClass = 'lecture';
+        if (item.type === 'curriculum') orderBadgeClass = 'curriculum';
+        else if (item.type === 'project') orderBadgeClass = 'project';
+
+        if (isEditMode) {
+          // RENDER IN EDIT MODE
+          row.innerHTML = `
+            <td>
+              <span class="order-badge ${orderBadgeClass}">${item.order}</span>
+            </td>
+            <td>
+              <input type="text" class="edit-input title-input" data-id="${item.id}" data-field="title" value="${escapeHtml(item.title)}">
+            </td>
+            <td style="text-align: center;">
+              <input type="text" class="edit-input url-input" data-id="${item.id}" data-field="slideUrl" value="${escapeHtml(item.slideUrl)}" placeholder="교안 URL 링크">
+            </td>
+            <td style="text-align: center;">
+              <input type="text" class="edit-input url-input" data-id="${item.id}" data-field="scriptUrl" value="${escapeHtml(item.scriptUrl)}" placeholder="대본 URL 링크">
+            </td>
+            <td style="text-align: center;">
+              <input type="text" class="edit-input url-input" data-id="${item.id}" data-field="video1Url" value="${escapeHtml(item.video1Url)}" placeholder="동영상 1 URL">
+            </td>
+            <td style="text-align: center;">
+              <input type="text" class="edit-input url-input" data-id="${item.id}" data-field="video2Url" value="${escapeHtml(item.video2Url)}" placeholder="동영상 2 URL">
+            </td>
+            <td style="text-align: center;">
+              <input type="text" class="edit-input url-input" data-id="${item.id}" data-field="video3Url" value="${escapeHtml(item.video3Url)}" placeholder="동영상 3 URL">
+            </td>
+            <td>
+              <input type="text" class="edit-input" data-id="${item.id}" data-field="remarks" value="${escapeHtml(item.remarks)}" placeholder="비고">
+            </td>
+          `;
+        } else {
+          // RENDER IN VIEW MODE
+          
+          // Slides cell
+          const slideCell = (item.slideUrl && item.slideUrl !== '#') 
+            ? `<a href="${item.slideUrl}" target="_blank" class="link-pill slide">${SLIDE_ICON}교안 보기</a>`
+            : `<span class="link-pill empty">${WAITING_ICON}준비중</span>`;
+
+          // Script cell
+          const scriptCell = (item.scriptUrl && item.scriptUrl !== '#')
+            ? `<a href="${item.scriptUrl}" target="_blank" class="link-pill script">${SCRIPT_ICON}대본 보기</a>`
+            : `<span class="link-pill empty">${WAITING_ICON}준비중</span>`;
+
+          // Video 1 cell
+          const video1Cell = (item.video1Url && item.video1Url !== '#')
+            ? `<a href="${item.video1Url}" target="_blank" class="link-pill video has-link">${VIDEO_ICON}1부 보기</a>`
+            : `<span class="link-pill empty">${WAITING_ICON}준비중</span>`;
+
+          // Video 2 cell
+          const video2Cell = (item.video2Url && item.video2Url !== '#')
+            ? `<a href="${item.video2Url}" target="_blank" class="link-pill video has-link">${VIDEO_ICON}2부 보기</a>`
+            : `<span class="link-pill empty">${WAITING_ICON}준비중</span>`;
+
+          // Video 3 cell
+          const video3Cell = (item.video3Url && item.video3Url !== '#')
+            ? `<a href="${item.video3Url}" target="_blank" class="link-pill video has-link">${VIDEO_ICON}3부 보기</a>`
+            : `<span class="link-pill empty">${WAITING_ICON}준비중</span>`;
+
+          row.innerHTML = `
+            <td>
+              <span class="order-badge ${orderBadgeClass}">${item.order}</span>
+            </td>
+            <td>
+              <span class="lecture-title-text">${escapeHtml(item.title)}</span>
+            </td>
+            <td style="text-align: center;">${slideCell}</td>
+            <td style="text-align: center;">${scriptCell}</td>
+            <td style="text-align: center;">${video1Cell}</td>
+            <td style="text-align: center;">${video2Cell}</td>
+            <td style="text-align: center;">${video3Cell}</td>
+            <td>
+              <span class="remarks-cell">${escapeHtml(item.remarks || '-')}</span>
+            </td>
+          `;
+        }
+
+        tbody.appendChild(row);
+      });
+    }
+
+    // Toggle between edit and view modes
+    function toggleEditMode() {
+      isEditMode = !isEditMode;
+
+      const editBtn = document.getElementById('edit-mode-btn');
+      const editBtnText = document.getElementById('edit-btn-text');
+      const floatingBar = document.getElementById('admin-floating-bar');
+
+      if (isEditMode) {
+        editBtn.classList.add('active');
+        editBtnText.innerText = '편집 취소하기';
+        floatingBar.classList.add('show');
+        showToast("실시간 편집 모드를 켰습니다. 링크를 즉시 편집해 보세요!");
+      } else {
+        editBtn.classList.remove('active');
+        editBtnText.innerText = '링크 편집 모드';
+        floatingBar.classList.remove('show');
+      }
+
+      renderTable();
+    }
+
+    function cancelEditMode() {
+      isEditMode = false;
+      
+      const editBtn = document.getElementById('edit-mode-btn');
+      const editBtnText = document.getElementById('edit-btn-text');
+      const floatingBar = document.getElementById('admin-floating-bar');
+      
+      editBtn.classList.remove('active');
+      editBtnText.innerText = '링크 편집 모드';
+      floatingBar.classList.remove('show');
+      
+      // Reload from saved state to discard changes
+      const savedData = localStorage.getItem('vibe_coding_lectures');
+      if (savedData) {
+        LECTURE_DATA = JSON.parse(savedData);
+      }
+      
+      initApp();
+      showToast("편집이 중단되었으며, 원래 데이터로 복원되었습니다.");
+    }
+
+    // Capture edits and save internally + localStorage
+    function captureEdits() {
+      const inputs = document.querySelectorAll('.edit-input');
+      inputs.forEach(input => {
+        const id = input.getAttribute('data-id');
+        const field = input.getAttribute('data-field');
+        const value = input.value.trim();
+
+        const item = LECTURE_DATA.find(x => x.id === id);
+        if (item) {
+          item[field] = value;
+        }
+      });
+    }
+
+    // Save changes into localStorage and build updated HTML file for local download
+    async function saveData() {
+      captureEdits();
+      
+      // Save locally to browser
+      localStorage.setItem('vibe_coding_lectures', JSON.stringify(LECTURE_DATA));
+      
+      // Re-render statistics
+      renderStats();
+      
+      // Turn off edit mode
+      isEditMode = false;
+      const editBtn = document.getElementById('edit-mode-btn');
+      const editBtnText = document.getElementById('edit-btn-text');
+      const floatingBar = document.getElementById('admin-floating-bar');
+      editBtn.classList.remove('active');
+      editBtnText.innerText = '링크 편집 모드';
+      floatingBar.classList.remove('show');
+      
+      renderTable();
+
+      // Trigger actual HTML download
+      await downloadUpdatedHTML();
+    }
+
+    // Generate modified HTML file reflecting the current state of LECTURE_DATA
+    async function downloadUpdatedHTML() {
+      try {
+        let sourceHtml = "";
+        
+        // Attempt to fetch current file contents via active page
+        try {
+          const response = await fetch(window.location.href);
+          sourceHtml = await response.text();
+        } catch (e) {
+          console.warn("Unable to fetch source code directly via fetch. Generating template...", e);
+        }
+
+        let updatedHtml = "";
+        const dataStartMarker = "/*DATA_START*/";
+        const dataEndMarker = "/*DATA_END*/";
+        const serializedData = `\n    let LECTURE_DATA = ${JSON.stringify(LECTURE_DATA, null, 6)};\n    `;
+
+        if (sourceHtml && sourceHtml.includes(dataStartMarker) && sourceHtml.includes(dataEndMarker)) {
+          // If we successfully fetched the active page source, replace just the LECTURE_DATA array
+          const startIndex = sourceHtml.indexOf(dataStartMarker) + dataStartMarker.length;
+          const endIndex = sourceHtml.indexOf(dataEndMarker);
+          
+          updatedHtml = sourceHtml.substring(0, startIndex) + serializedData + sourceHtml.substring(endIndex);
+        } else {
+          // If fetch fails (like CORS on file:// protocol), we serialize and offer the raw copy modal
+          showJsonModal(true);
+          return;
+        }
+
+        // Trigger dynamic download
+        const blob = new Blob([updatedHtml], { type: 'text/html;charset=utf-8;' });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", "index.html");
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        showToast("성공적으로 변경이 완료되었으며, 최신 index.html 파일 다운로드가 시작되었습니다!");
+      } catch (err) {
+        console.error("Failed to compile HTML file", err);
+        showJsonModal(true);
+      }
+    }
+
+    // Copy current state to clipboard as JSON
+    function copyUpdatedJSON() {
+      captureEdits();
+      const jsonStr = JSON.stringify(LECTURE_DATA, null, 2);
+      
+      navigator.clipboard.writeText(jsonStr).then(() => {
+        showToast("최신 JSON 데이터가 클립보드에 성공적으로 복사되었습니다!");
+      }).catch(err => {
+        console.error('Clipboard copy error', err);
+        showJsonModal(false);
+      });
+    }
+
+    // Modal Operations
+    function showJsonModal(isSaveFallback) {
+      captureEdits();
+      const modal = document.getElementById('modal-overlay');
+      const text = document.getElementById('modal-json-text');
+      const title = document.getElementById('modal-title');
+      const desc = document.getElementById('modal-desc');
+
+      text.value = `let LECTURE_DATA = ${JSON.stringify(LECTURE_DATA, null, 2)};`;
+      
+      if (isSaveFallback) {
+        title.innerText = "HTML 저장 대체 안내";
+        desc.innerHTML = `현재 브라우저 보안 규정(로컬 file:// 사용 등)으로 인해 직접 파일 다운로드가 차단되었습니다.<br>아래 <strong>최신 데이터 블록</strong>을 복사하고 <code>index.html</code> 하단의 <code>LECTURE_DATA</code> 변수 영역에 덮어씌워(저장) 주세요!`;
+      } else {
+        title.innerText = "LECTURE_DATA JSON 추출";
+        desc.innerText = "현재까지 편집된 데이터 스냅샷입니다. 이 데이터를 파일에 수동으로 반영할 수 있습니다.";
+      }
+
+      modal.classList.add('show');
+    }
+
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.remove('show');
+    }
+
+    function copyModalJSON() {
+      const textarea = document.getElementById('modal-json-text');
+      textarea.select();
+      document.execCommand('copy');
+      showToast("JSON 텍스트가 성공적으로 복사되었습니다!");
+      closeModal();
+    }
+
+    // Helper functions
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast-notification');
+      document.getElementById('toast-message').innerText = message;
+      
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3500);
+    }
+  </script>
+</body>
+</html>
