@@ -1429,13 +1429,13 @@
               <input type="text" class="edit-input url-input" data-id="${item.id}" data-field="scriptUrl" value="${escapeHtml(item.scriptUrl)}" placeholder="대본 URL 링크">
             </td>
             <td style="text-align: center;">
-              <input type="text" class="edit-input url-input" data-id="${item.id}" data-field="video1Url" value="${escapeHtml(item.video1Url)}" placeholder="동영상 1 URL">
+              ${item.type === 'curriculum' ? '-' : `<input type="text" class="edit-input url-input" data-id="${item.id}" data-field="video1Url" value="${escapeHtml(item.video1Url)}" placeholder="동영상 1 URL">`}
             </td>
             <td style="text-align: center;">
-              <input type="text" class="edit-input url-input" data-id="${item.id}" data-field="video2Url" value="${escapeHtml(item.video2Url)}" placeholder="동영상 2 URL">
+              ${item.type === 'curriculum' ? '-' : `<input type="text" class="edit-input url-input" data-id="${item.id}" data-field="video2Url" value="${escapeHtml(item.video2Url)}" placeholder="동영상 2 URL">`}
             </td>
             <td style="text-align: center;">
-              <input type="text" class="edit-input url-input" data-id="${item.id}" data-field="video3Url" value="${escapeHtml(item.video3Url)}" placeholder="동영상 3 URL">
+              ${item.type === 'curriculum' ? '-' : `<input type="text" class="edit-input url-input" data-id="${item.id}" data-field="video3Url" value="${escapeHtml(item.video3Url)}" placeholder="동영상 3 URL">`}
             </td>
             <td>
               <input type="text" class="edit-input" data-id="${item.id}" data-field="remarks" value="${escapeHtml(item.remarks)}" placeholder="비고">
@@ -1455,17 +1455,17 @@
             : `<span class="link-pill empty">${WAITING_ICON}준비중</span>`;
 
           // Video 1 cell
-          const video1Cell = (item.video1Url && item.video1Url !== '#')
+          const video1Cell = (item.type === 'curriculum') ? '' : (item.video1Url && item.video1Url !== '#')
             ? `<a href="${item.video1Url}" target="_blank" class="link-pill video has-link">${VIDEO_ICON}1부 보기</a>`
             : `<span class="link-pill empty">${WAITING_ICON}준비중</span>`;
 
           // Video 2 cell
-          const video2Cell = (item.video2Url && item.video2Url !== '#')
+          const video2Cell = (item.type === 'curriculum') ? '' : (item.video2Url && item.video2Url !== '#')
             ? `<a href="${item.video2Url}" target="_blank" class="link-pill video has-link">${VIDEO_ICON}2부 보기</a>`
             : `<span class="link-pill empty">${WAITING_ICON}준비중</span>`;
 
           // Video 3 cell
-          const video3Cell = (item.video3Url && item.video3Url !== '#')
+          const video3Cell = (item.type === 'curriculum') ? '' : (item.video3Url && item.video3Url !== '#')
             ? `<a href="${item.video3Url}" target="_blank" class="link-pill video has-link">${VIDEO_ICON}3부 보기</a>`
             : `<span class="link-pill empty">${WAITING_ICON}준비중</span>`;
 
