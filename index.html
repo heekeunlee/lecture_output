@@ -1275,7 +1275,7 @@
     // Initial load
     document.addEventListener('DOMContentLoaded', () => {
       // Try to load saved data from localStorage first
-      const savedData = localStorage.getItem('vibe_coding_lectures');
+      const savedData = localStorage.getItem('vibe_coding_lectures_v2');
       if (savedData) {
         try {
           LECTURE_DATA = JSON.parse(savedData);
@@ -1526,7 +1526,7 @@
       floatingBar.classList.remove('show');
 
       // Reload from saved state to discard changes
-      const savedData = localStorage.getItem('vibe_coding_lectures');
+      const savedData = localStorage.getItem('vibe_coding_lectures_v2');
       if (savedData) {
         LECTURE_DATA = JSON.parse(savedData);
       }
@@ -1555,7 +1555,7 @@
       captureEdits();
 
       // Save locally to browser
-      localStorage.setItem('vibe_coding_lectures', JSON.stringify(LECTURE_DATA));
+      localStorage.setItem('vibe_coding_lectures_v2', JSON.stringify(LECTURE_DATA));
 
       // Re-render statistics
       renderStats();
