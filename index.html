@@ -867,12 +867,8 @@
 
       <!-- Toolbar Controls -->
       <div class="table-toolbar">
-        <div class="search-box">
-          <svg class="search-icon" viewBox="0 0 24 24">
-            <path
-              d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
-          </svg>
-          <input type="text" id="search-input" class="search-input" placeholder="강의명 또는 단어로 검색해 보세요">
+        <div class="search-box" style="display: none;">
+          <!-- Search box removed -->
         </div>
 
         <div class="filter-group">
@@ -899,14 +895,11 @@
         <table class="vibe-table">
           <thead>
             <tr>
-              <th style="width: 8%;">강의순서</th>
-              <th style="width: 32%;">제목</th>
-              <th style="width: 11%; text-align: center;">강의교안</th>
-              <th style="width: 11%; text-align: center;">스크립트(대본)</th>
-              <th style="width: 10%; text-align: center;">오디오</th>
-              <th style="width: 10%; text-align: center;">동영상1</th>
-              <th style="width: 10%; text-align: center;">동영상2</th>
-              <th style="width: 8%;">비고</th>
+              <th style="width: 10%;">강의순서</th>
+              <th style="width: 40%;">제목</th>
+              <th style="width: 15%; text-align: center;">강의교안</th>
+              <th style="width: 15%; text-align: center;">동영상</th>
+              <th style="width: 20%; text-align: center;">추가 자료</th>
             </tr>
           </thead>
           <tbody id="table-body">
@@ -1286,11 +1279,7 @@
 
       initApp();
 
-      // Listen for search input changes
-      document.getElementById('search-input').addEventListener('input', (e) => {
-        searchQuery = e.target.value.toLowerCase().trim();
-        renderTable();
-      });
+      // Search functionality removed
 
       // Double-click gesture on the main title to toggle admin edit mode
       const mainTitle = document.querySelector('.hero-title');
@@ -1396,8 +1385,8 @@
       if (filteredData.length === 0) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="8" style="text-align: center; padding: 48px; color: var(--toss-gray-500); font-weight: 500;">
-              검색 조건에 맞는 자료가 없습니다.
+            <td colspan="5" style="text-align: center; padding: 48px; color: var(--toss-gray-500); font-weight: 500;">
+              조건에 맞는 자료가 없습니다.
             </td>
           </tr>
         `;
@@ -1427,19 +1416,10 @@
               <input type="text" class="edit-input url-input" data-id="${item.id}" data-field="slideUrl" value="${escapeHtml(item.slideUrl)}" placeholder="교안 URL 링크">
             </td>
             <td style="text-align: center;">
-              <input type="text" class="edit-input url-input" data-id="${item.id}" data-field="scriptUrl" value="${escapeHtml(item.scriptUrl)}" placeholder="대본 URL 링크">
+              ${item.type === 'curriculum' ? '-' : `<input type="text" class="edit-input url-input" data-id="${item.id}" data-field="video2Url" value="${escapeHtml(item.video2Url)}" placeholder="동영상 URL">`}
             </td>
             <td style="text-align: center;">
-              ${item.type === 'curriculum' ? '-' : `<input type="text" class="edit-input url-input" data-id="${item.id}" data-field="video1Url" value="${escapeHtml(item.video1Url)}" placeholder="오디오 URL">`}
-            </td>
-            <td style="text-align: center;">
-              ${item.type === 'curriculum' ? '-' : `<input type="text" class="edit-input url-input" data-id="${item.id}" data-field="video2Url" value="${escapeHtml(item.video2Url)}" placeholder="동영상 1 URL">`}
-            </td>
-            <td style="text-align: center;">
-              ${item.type === 'curriculum' ? '-' : `<input type="text" class="edit-input url-input" data-id="${item.id}" data-field="video3Url" value="${escapeHtml(item.video3Url)}" placeholder="동영상 2 URL">`}
-            </td>
-            <td>
-              <input type="text" class="edit-input" data-id="${item.id}" data-field="remarks" value="${escapeHtml(item.remarks)}" placeholder="비고">
+              ${item.type === 'curriculum' ? '-' : `<input type="text" class="edit-input url-input" data-id="${item.id}" data-field="video3Url" value="${escapeHtml(item.video3Url)}" placeholder="추가 자료 URL">`}
             </td>
           `;
         } else {
@@ -1450,24 +1430,14 @@
             ? `<a href="${item.slideUrl}" target="_blank" class="link-pill slide">${SLIDE_ICON}교안 보기</a>`
             : `<span class="link-pill empty">${WAITING_ICON}준비중</span>`;
 
-          // Script cell
-          const scriptCell = (item.scriptUrl && item.scriptUrl !== '#')
-            ? `<a href="${item.scriptUrl}" target="_blank" class="link-pill script">${SCRIPT_ICON}대본 보기</a>`
+          // Video cell
+          const videoCell = (item.type === 'curriculum') ? '' : (item.video2Url && item.video2Url !== '#')
+            ? `<a href="${item.video2Url}" target="_blank" class="link-pill video has-link">${VIDEO_ICON}동영상 보기</a>`
             : `<span class="link-pill empty">${WAITING_ICON}준비중</span>`;
 
-          // Video 1 cell (Audio)
-          const video1Cell = (item.type === 'curriculum') ? '' : (item.video1Url && item.video1Url !== '#')
-            ? `<a href="${item.video1Url}" target="_blank" class="link-pill video has-link">${AUDIO_ICON}오디오 듣기</a>`
-            : `<span class="link-pill empty">${WAITING_ICON}준비중</span>`;
-
-          // Video 2 cell
-          const video2Cell = (item.type === 'curriculum') ? '' : (item.video2Url && item.video2Url !== '#')
-            ? `<a href="${item.video2Url}" target="_blank" class="link-pill video has-link">${VIDEO_ICON}1부 보기</a>`
-            : `<span class="link-pill empty">${WAITING_ICON}준비중</span>`;
-
-          // Video 3 cell
-          const video3Cell = (item.type === 'curriculum') ? '' : (item.video3Url && item.video3Url !== '#')
-            ? `<a href="${item.video3Url}" target="_blank" class="link-pill video has-link">${VIDEO_ICON}2부 보기</a>`
+          // Extra Info cell
+          const extraCell = (item.type === 'curriculum') ? '' : (item.video3Url && item.video3Url !== '#')
+            ? `<a href="${item.video3Url}" target="_blank" class="link-pill video has-link">${VIDEO_ICON}추가 자료</a>`
             : `<span class="link-pill empty">${WAITING_ICON}준비중</span>`;
 
           row.innerHTML = `
@@ -1478,13 +1448,8 @@
               <span class="lecture-title-text">${escapeHtml(displayTitle)}</span>
             </td>
             <td style="text-align: center;">${slideCell}</td>
-            <td style="text-align: center;">${scriptCell}</td>
-            <td style="text-align: center;">${video1Cell}</td>
-            <td style="text-align: center;">${video2Cell}</td>
-            <td style="text-align: center;">${video3Cell}</td>
-            <td>
-              <span class="remarks-cell">${escapeHtml(item.remarks || '-')}</span>
-            </td>
+            <td style="text-align: center;">${videoCell}</td>
+            <td style="text-align: center;">${extraCell}</td>
           `;
         }
 
