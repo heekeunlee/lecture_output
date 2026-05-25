@@ -1437,8 +1437,8 @@
 
           // Slides cell
           const slideCell = (item.slideUrl && item.slideUrl !== '#')
-            ? `<a href="${item.slideUrl}" target="_blank" class="link-pill slide">${SLIDE_ICON}교안 보기</a>`
-            : `<span class="link-pill empty">${WAITING_ICON}준비중</span>`;
+            ? `<a href="${item.slideUrl}" target="_blank" style="color: var(--toss-blue); text-decoration: underline; font-size: 13px; word-break: break-all;">${item.slideUrl}</a>`
+            : `<span style="color: var(--toss-gray-400); font-weight: 500; font-size: 13px;">준비중</span>`;
 
           // Extra Info cell
           const extraCell = (item.type === 'curriculum') ? '' : (item.video3Url && item.video3Url !== '#')
