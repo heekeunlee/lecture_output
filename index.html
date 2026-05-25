@@ -911,9 +911,8 @@
             <tr>
               <th style="width: 10%;">강의순서</th>
               <th style="width: 40%;">제목</th>
-              <th style="width: 15%; text-align: center;">강의교안</th>
-              <th style="width: 15%; text-align: center;">동영상</th>
-              <th style="width: 20%; text-align: center;">추가 자료</th>
+              <th style="width: 20%; text-align: center;">강의교안</th>
+              <th style="width: 30%; text-align: center;">추가 자료</th>
             </tr>
           </thead>
           <tbody id="table-body">
@@ -1399,7 +1398,7 @@
       if (filteredData.length === 0) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="5" style="text-align: center; padding: 48px; color: var(--toss-gray-500); font-weight: 500;">
+            <td colspan="4" style="text-align: center; padding: 48px; color: var(--toss-gray-500); font-weight: 500;">
               조건에 맞는 자료가 없습니다.
             </td>
           </tr>
@@ -1430,9 +1429,6 @@
               <input type="text" class="edit-input url-input" data-id="${item.id}" data-field="slideUrl" value="${escapeHtml(item.slideUrl)}" placeholder="교안 URL 링크">
             </td>
             <td style="text-align: center;">
-              ${item.type === 'curriculum' ? '-' : `<input type="text" class="edit-input url-input" data-id="${item.id}" data-field="video2Url" value="${escapeHtml(item.video2Url)}" placeholder="동영상 URL">`}
-            </td>
-            <td style="text-align: center;">
               ${item.type === 'curriculum' ? '-' : `<input type="text" class="edit-input url-input" data-id="${item.id}" data-field="video3Url" value="${escapeHtml(item.video3Url)}" placeholder="추가 자료 URL">`}
             </td>
           `;
@@ -1442,11 +1438,6 @@
           // Slides cell
           const slideCell = (item.slideUrl && item.slideUrl !== '#')
             ? `<a href="${item.slideUrl}" target="_blank" class="link-pill slide">${SLIDE_ICON}교안 보기</a>`
-            : `<span class="link-pill empty">${WAITING_ICON}준비중</span>`;
-
-          // Video cell
-          const videoCell = (item.type === 'curriculum') ? '' : (item.video2Url && item.video2Url !== '#')
-            ? `<a href="${item.video2Url}" target="_blank" class="link-pill video has-link">${VIDEO_ICON}동영상 보기</a>`
             : `<span class="link-pill empty">${WAITING_ICON}준비중</span>`;
 
           // Extra Info cell
@@ -1462,7 +1453,6 @@
               <span class="lecture-title-text">${escapeHtml(displayTitle)}</span>
             </td>
             <td style="text-align: center;">${slideCell}</td>
-            <td style="text-align: center;">${videoCell}</td>
             <td style="text-align: center;">${extraCell}</td>
           `;
         }
