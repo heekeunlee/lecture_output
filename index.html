@@ -911,8 +911,7 @@
             <tr>
               <th style="width: 10%;">강의순서</th>
               <th style="width: 40%;">제목</th>
-              <th style="width: 20%; text-align: center;">강의교안</th>
-              <th style="width: 30%; text-align: center;">추가 자료</th>
+              <th style="width: 50%; text-align: center;">강의교안</th>
             </tr>
           </thead>
           <tbody id="table-body">
@@ -1398,7 +1397,7 @@
       if (filteredData.length === 0) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="4" style="text-align: center; padding: 48px; color: var(--toss-gray-500); font-weight: 500;">
+            <td colspan="3" style="text-align: center; padding: 48px; color: var(--toss-gray-500); font-weight: 500;">
               조건에 맞는 자료가 없습니다.
             </td>
           </tr>
@@ -1428,9 +1427,6 @@
             <td style="text-align: center;">
               <input type="text" class="edit-input url-input" data-id="${item.id}" data-field="slideUrl" value="${escapeHtml(item.slideUrl)}" placeholder="교안 URL 링크">
             </td>
-            <td style="text-align: center;">
-              ${item.type === 'curriculum' ? '-' : `<input type="text" class="edit-input url-input" data-id="${item.id}" data-field="video3Url" value="${escapeHtml(item.video3Url)}" placeholder="추가 자료 URL">`}
-            </td>
           `;
         } else {
           // RENDER IN VIEW MODE
@@ -1440,11 +1436,6 @@
             ? `<a href="${item.slideUrl}" target="_blank" style="color: var(--toss-blue); text-decoration: underline; font-size: 13px; word-break: break-all;">${item.slideUrl}</a>`
             : `<span style="color: var(--toss-gray-400); font-weight: 500; font-size: 13px;">준비중</span>`;
 
-          // Extra Info cell
-          const extraCell = (item.type === 'curriculum') ? '' : (item.video3Url && item.video3Url !== '#')
-            ? `<a href="${item.video3Url}" target="_blank" class="link-pill video has-link">${VIDEO_ICON}추가 자료</a>`
-            : `<span class="link-pill empty">${WAITING_ICON}준비중</span>`;
-
           row.innerHTML = `
             <td>
               <span class="order-badge ${orderBadgeClass}">${item.order}</span>
@@ -1453,7 +1444,6 @@
               <span class="lecture-title-text">${escapeHtml(displayTitle)}</span>
             </td>
             <td style="text-align: center;">${slideCell}</td>
-            <td style="text-align: center;">${extraCell}</td>
           `;
         }
 
